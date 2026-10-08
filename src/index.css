@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@import "@fontsource-variable/manrope";
+
+@theme {
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: #1a1613;
+  --color-surface: #231e1a;
+  --color-foreground: #ece3d8;
+  --color-muted: #a2958a;
+  --color-accent: #d4845f;
+  --color-accent-hover: #e09672;
+  --color-on-accent: #1a1613;
+  --color-border: #3a312b;
+
+  --radius-field: 0.75rem;
+  --radius-card: 1rem;
+
+  --shadow-soft: 0 8px 24px -8px rgb(0 0 0 / 0.5);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}
