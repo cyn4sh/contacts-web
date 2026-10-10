@@ -12,7 +12,7 @@ const refreshClient = createFetchClient<paths>({
 
 let refreshPromise: Promise<string | null> | null = null
 
-function refreshAccessToken() {
+export function refreshAccessToken() {
   refreshPromise ??= refreshClient
     .POST('/api/auth/refresh/')
     .then(({ data }) => {
