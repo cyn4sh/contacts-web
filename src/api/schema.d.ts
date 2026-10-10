@@ -3,6 +3,20 @@
  * Do not make direct changes to the file.
  */
 
+export type $Read<T> = {
+    readonly $read: T;
+};
+export type $Write<T> = {
+    readonly $write: T;
+};
+export type Readable<T> = T extends $Write<any> ? never : T extends $Read<infer U> ? Readable<U> : T extends (infer E)[] ? Readable<E>[] : T extends object ? {
+    [K in keyof T as NonNullable<T[K]> extends $Write<any> ? never : K]: Readable<T[K]>;
+} : T;
+export type Writable<T> = T extends $Read<any> ? never : T extends $Write<infer U> ? Writable<U> : T extends (infer E)[] ? Writable<E>[] : T extends object ? {
+    [K in keyof T as NonNullable<T[K]> extends $Read<any> ? never : K]: Writable<T[K]>;
+} & {
+    [K in keyof T as NonNullable<T[K]> extends $Read<any> ? K : never]?: never;
+} : T;
 export interface paths {
     "/api/auth/login/": {
         parameters: {
@@ -178,47 +192,47 @@ export interface components {
             access: string;
         };
         Contact: {
-            readonly id: number;
-            readonly owner: number;
+            id: $Read<number>;
+            owner: $Read<number>;
             name: string;
             phone?: string;
             email?: string;
             address?: string;
             notes?: string;
             /** Format: date-time */
-            readonly created_at: string;
+            created_at: $Read<string>;
             /** Format: date-time */
-            readonly updated_at: string;
+            updated_at: $Read<string>;
         };
         PatchedContact: {
-            readonly id?: number;
-            readonly owner?: number;
+            id?: $Read<number>;
+            owner?: $Read<number>;
             name?: string;
             phone?: string;
             email?: string;
             address?: string;
             notes?: string;
             /** Format: date-time */
-            readonly created_at?: string;
+            created_at?: $Read<string>;
             /** Format: date-time */
-            readonly updated_at?: string;
+            updated_at?: $Read<string>;
         };
         Register: {
             /** @description Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
             username: string;
             /** Email address */
             email?: string;
-            password: string;
-            password2: string;
+            password: $Write<string>;
+            password2: $Write<string>;
         };
         TokenObtainPair: {
-            username: string;
-            password: string;
-            readonly access: string;
-            readonly refresh: string;
+            username: $Write<string>;
+            password: $Write<string>;
+            access: $Read<string>;
+            refresh: $Read<string>;
         };
         TokenRefresh: {
-            readonly access: string;
+            access: $Read<string>;
             refresh: string;
         };
     };
