@@ -1,22 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useState } from "react";
+import LoginForm from "./features/auth/LoginForm";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    document.title = `Clicked ${count} times`
-  }, [count])
+  if (!isLoggedIn) {
+    return <LoginForm onLoggedIn={() => setIsLoggedIn(true)} />;
+  }
 
   return (
     <main className="p-8">
-      <button
-        onClick={() => setCount((count) => count + 1)}
-        className="rounded-field bg-accent px-5 py-3 font-semibold text-on-accent shadow-soft transition-colors hover:bg-accent-hover"
-      >
-        Clicked {count} times
-      </button>
+      <p>Logged in. Your contacts will appear here.</p>
     </main>
-  )
+  );
 }
 
-export default App
+export default App;
