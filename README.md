@@ -33,4 +33,24 @@ The app runs at http://localhost:5173.
 
 ## Environment variables
 
-Not needed yet. They will be documented here once the API connection is added.
+Copy the example file and adjust it if your backend runs elsewhere:
+
+```bash
+cp .env.example .env
+```
+
+| Variable | Purpose | Example |
+| --- | --- | --- |
+| `VITE_API_URL` | Base URL of the Contacts API (no trailing slash) | `http://127.0.0.1:8000` |
+
+Variables starting with `VITE_` are bundled into the browser build and are public, so never put secrets in them.
+
+## Backend
+
+The API lives in the separate `contacts-api` repository. Run it locally and generate the API types with:
+
+```bash
+npm run generate:api
+```
+
+The backend must be running at the address in `.env` when you generate types.
