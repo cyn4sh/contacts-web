@@ -1,6 +1,6 @@
 import { useState, type SubmitEvent } from "react";
 import { $api } from "../../api/client";
-import { setAccessToken } from "../../api/token";
+import { setAccessToken } from "../../lib/auth/token";
 
 interface LoginFormProps {
   onLoggedIn: () => void;

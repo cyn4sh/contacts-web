@@ -1,7 +1,7 @@
 import createFetchClient, { type Middleware } from 'openapi-fetch'
 import createClient from 'openapi-react-query'
-import type { paths } from './schema'
-import { getAccessToken, setAccessToken } from './token'
+import type { paths } from '../types/api'
+import { getAccessToken, setAccessToken } from '../lib/auth/token'
 
 const baseUrl = import.meta.env.VITE_API_URL
 
