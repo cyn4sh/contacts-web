@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { refreshAccessToken } from "./api/client";
 import LoginForm from "./features/auth/LoginForm";
 import ContactList from './features/contacts/ContactList';
+import ContactForm from "./features/contacts/ContactForm"
 
 type Session = "checking" | "signedIn" | "signedOut";
 
@@ -24,6 +25,7 @@ function App() {
 
   return (
     <main className="p-8">
+      <ContactForm />
       <ContactList />
     </main>
   );
