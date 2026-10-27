@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import { $api } from '../../api/client'
+import ContactEditForm from './ContactEditForm'
 
 export default function ContactList() {
+  const [editingId, setEditingId] = useState<number | null>(null)
   const { data, isPending, isError } = $api.useQuery('get', '/api/contacts/')
 
   if (isPending) {
@@ -19,9 +22,21 @@ export default function ContactList() {
     <ul>
       {data.map((contact) => (
         <li key={contact.id}>
-          <strong>{contact.name}</strong>
-          {contact.phone && <span> {contact.phone}</span>}
-          {contact.email && <span> {contact.email}</span>}
+          {editingId === contact.id ? (
+            <ContactEditForm
+              contact={contact}
+              onDone={() => setEditingId(null)}
+            />
+          ) : (
+            <>
+              <strong>{contact.name}</strong>
+              {contact.phone && <span> {contact.phone}</span>}
+              {contact.email && <span> {contact.email}</span>}
+              <button type="button" onClick={() => setEditingId(contact.id)}>
+                Edit
+              </button>
+            </>
+          )}
         </li>
       ))}
     </ul>
