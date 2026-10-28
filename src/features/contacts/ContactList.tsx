@@ -1,10 +1,24 @@
 import { useState } from 'react'
 import { $api } from '../../api/client'
 import ContactEditForm from './ContactEditForm'
+import { useQueryClient } from '@tanstack/react-query'
 
 export default function ContactList() {
   const [editingId, setEditingId] = useState<number | null>(null)
+  const queryClient = useQueryClient()
+  const deleteContact = $api.useMutation("delete", "/api/contacts/{id}/")
   const { data, isPending, isError } = $api.useQuery('get', '/api/contacts/')
+
+function handleDelete(id: number) {
+  deleteContact.mutate(
+    { params: { path: { id: String(id) } } },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['get', '/api/contacts/'] })
+      },
+    },
+  )
+}
 
   if (isPending) {
     return <p>Loading contacts...</p>
@@ -34,6 +48,9 @@ export default function ContactList() {
               {contact.email && <span> {contact.email}</span>}
               <button type="button" onClick={() => setEditingId(contact.id)}>
                 Edit
+              </button>
+              <button type="button" onClick={() => handleDelete(contact.id)}>
+                Delete
               </button>
             </>
           )}
